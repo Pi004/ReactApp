@@ -24,13 +24,13 @@ To create a new migration based on changes in your entity classes or `DbContext`
 ```bash
 dotnet ef migrations add MigrationName
 ```
-###2. Apply the Migration to the Database
+### 2. Apply the Migration to the Database
 To apply all pending migrations and update your database schema, use:
 
 ```bash
 dotnet ef database update
 ```
-###3.Rollback to a Specific Migration
+### 3.Rollback to a Specific Migration
 To rollback the database to a previous migration, specify the migration name:
 
 ```bash
