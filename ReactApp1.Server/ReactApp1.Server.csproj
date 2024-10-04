@@ -15,7 +15,13 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.5" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
   </ItemGroup>
 
@@ -29,9 +35,9 @@
     <Folder Include="DBModels\FileVersion\" />
     <Folder Include="DBModels\Audit\" />
     <Folder Include="DBModels\Permissions\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Services\" />
-    <Folder Include="RBModels\" />
+    <Folder Include="RBModels\Files\" />
+    <Folder Include="RBModels\Folder\" />
+    <Folder Include="RBModels\Trash\" />
   </ItemGroup>
 
 </Project>

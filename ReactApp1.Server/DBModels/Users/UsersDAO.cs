@@ -1,5 +1,6 @@
 ﻿using ReactApp1.Server.DBModels.Context;
 using ReactApp1.Server.DBModels.Trash;
+using ReactApp1.Server.Helper;
 using ReactApp1.Server.RBModels.Users;
 
 namespace ReactApp1.Server.DBModels.Users
@@ -7,17 +8,19 @@ namespace ReactApp1.Server.DBModels.Users
 	public interface IUsers
 	{
 		public UsersEntity CreateUser(UserRB rb);
-		public void DeleteUser(UserRB rb);
-		public List<UsersEntity> ReadUsers();
+		public TrashEntity? DeleteUser(DelUserRB rb);
+		public List<UsersEntity>? ReadUsers(SearchUsersRB srb);
 	}
 	public class UsersDAO : IUsers
 	{
 		public readonly new ApplicationDBFactory _dbcontext;
+		public readonly IHelper _helper;
+		public SearchUsersRB srb = new SearchUsersRB { };
 
-
-		public UsersDAO(ApplicationDBFactory dbcontext)
+		public UsersDAO(ApplicationDBFactory dbcontext, IHelper helper)
 		{
 			_dbcontext = dbcontext;
+			_helper = helper;
 		}
 
 		public UsersEntity CreateUser(UserRB rb)
@@ -32,30 +35,49 @@ namespace ReactApp1.Server.DBModels.Users
 			_dbcontext.SaveChanges();
 			return entity;
 		}
-		public void DeleteUser(UserRB rb)
+		public TrashEntity? DeleteUser(DelUserRB rb)
 		{
-			UsersEntity entity = _dbcontext.users.FirstOrDefault(u => u.UserName == rb.UserName && u.Email == rb.Email && u.PasswordHash == rb.PasswordHash);
-			if (entity != null)
+			try
 			{
-				entity.IsDeleted = true;
-				TrashEntity trash = new TrashEntity
+				IQueryable<UsersEntity> query = _dbcontext.users.AsQueryable();
+				UsersEntity entity = _helper.Search(query, rb).ToList()[0];
+				if (entity != null)
 				{
-					UserId = entity.Id,
-				};
-				_dbcontext.users.Update(entity);
-				_dbcontext.trash.Add(trash);
-				_dbcontext.SaveChanges();
+					entity.IsDeleted = true;
+					TrashEntity trash = new TrashEntity
+					{
+						UserId = entity.Id,
+					};
+					_dbcontext.users.Update(entity);
+					_dbcontext.trash.Add(trash);
+					_dbcontext.SaveChanges();
+					return trash;
+				}
+				else
+				{
+					Console.WriteLine("Error at UsersDAO");
+					return null;
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				Console.WriteLine("Error at UsersDAO");
+				Console.WriteLine(ex.ToString());
+				return null;
 			}
 		}
 
-		public List<UsersEntity> ReadUsers()
+		public List<UsersEntity>? ReadUsers(SearchUsersRB srb)
 		{
-			List<UsersEntity> list = _dbcontext.users.ToList();
-			return list;
+			try
+			{
+				IQueryable<UsersEntity> query = _dbcontext.users.AsQueryable();
+				return _helper.Search(query, srb).ToList();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"{ex.Message}");
+				return null;
+			}
 		}
 	}
 }
