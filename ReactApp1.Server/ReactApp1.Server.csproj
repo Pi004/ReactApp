@@ -26,12 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DBModels\Folders\" />
-    <Folder Include="DBModels\Files\" />
     <Folder Include="DBModels\FileVersion\" />
     <Folder Include="DBModels\Audit\" />
     <Folder Include="DBModels\Permissions\" />
-    <Folder Include="DBModels\Trash\" />
     <Folder Include="DTO\" />
     <Folder Include="Services\" />
     <Folder Include="RBModels\" />

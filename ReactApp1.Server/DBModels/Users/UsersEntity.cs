@@ -17,6 +17,7 @@ namespace ReactApp1.Server.DBModels.Users
 		public string PasswordHash { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime UpdatedAt { get; set; }
+		public bool IsDeleted { get; set; } = false;
 		public ICollection<FolderEntity>? Folders { get; set; }
 		public ICollection<FileEntity>? Files { get; set; }
 		public ICollection<TrashEntity>? trashEntities { get; set; }
