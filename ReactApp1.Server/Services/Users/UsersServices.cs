@@ -28,7 +28,7 @@ namespace ReactApp1.Server.Services.Users
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.ToString());
+				response.data = ex;
 				return response;
 			}
 		}
@@ -42,7 +42,7 @@ namespace ReactApp1.Server.Services.Users
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.ToString());
+				response.data = ex;
 				return response;
 			}
 		}
@@ -57,7 +57,7 @@ namespace ReactApp1.Server.Services.Users
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.ToString());
+				response.data = ex;
 				return response;
 			}
 		}

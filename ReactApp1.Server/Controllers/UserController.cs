@@ -18,44 +18,44 @@ namespace ReactApp1.Server.Controllers
 		}
 
 		[HttpGet]
-		public ResponseDTO GetAll()
+		public IActionResult GetAll()
 		{
 			try
 			{
-				return UserService.Read();
+				return Ok(UserService.Read());
 			}
 			catch (Exception ex)
 			{
 				response.data = ex.ToString();
-				return response;
+				return Ok(response);
 			}
 		}
 
 		[HttpPost]
-		public ResponseDTO Post([FromBody] UserRB rb)
+		public IActionResult Post([FromBody] UserRB rb)
 		{
 			try
 			{
-				return UserService.Create(rb);
+				return Ok(UserService.Create(rb));
 			}
 			catch (Exception ex)
 			{
 				response.data = ex.ToString();
-				return response;
+				return Ok(response);
 			}
 		}
 
 		[HttpDelete]
-		public ResponseDTO Delete([FromBody] DelUserRB rb)
+		public IActionResult Delete([FromBody] DelUserRB rb)
 		{
 			try
 			{
-				return UserService.Delete(rb);
+				return Ok(UserService.Delete(rb));
 			}
 			catch (Exception ex)
 			{
 				response.data = ex.ToString();
-				return response;
+				return Ok(response);
 			}
 		}
 	}

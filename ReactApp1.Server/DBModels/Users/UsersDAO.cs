@@ -25,15 +25,24 @@ namespace ReactApp1.Server.DBModels.Users
 
 		public UsersEntity CreateUser(UserRB rb)
 		{
-			UsersEntity entity = new UsersEntity
+			try
 			{
-				Email = rb.Email,
-				PasswordHash = rb.PasswordHash,
-				UserName = rb.UserName,
-			};
-			_dbcontext.users.Add(entity);
-			_dbcontext.SaveChanges();
-			return entity;
+
+				UsersEntity entity = new UsersEntity
+				{
+					Email = rb.Email,
+					UserName = rb.UserName,
+				};
+				_helper.PasswordHash(entity, rb);
+				_dbcontext.users.Add(entity);
+				_dbcontext.SaveChanges();
+				return entity;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				return null;
+			}
 		}
 		public TrashEntity? DeleteUser(DelUserRB rb)
 		{

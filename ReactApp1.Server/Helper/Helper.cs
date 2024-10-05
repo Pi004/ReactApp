@@ -1,4 +1,7 @@
-﻿using ReactApp1.Server.DBModels.Context;
+﻿using Microsoft.AspNetCore.Identity;
+using ReactApp1.Server.DBModels.Context;
+using ReactApp1.Server.DBModels.Users;
+using ReactApp1.Server.RBModels.Users;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 
@@ -7,13 +10,17 @@ namespace ReactApp1.Server.Helper
 	public interface IHelper
 	{
 		public IQueryable<T> Search<T>(IQueryable<T> query, object frb);
+		public void PasswordHash(UsersEntity user, UserRB rb);
+		public bool VerifyPasswrod(UsersEntity user, UserRB rb);
 	}
 	public class Helper : IHelper
 	{
 		private readonly new ApplicationDBFactory _DbContext;
-		public Helper(ApplicationDBFactory dbContext)
+		private readonly new PasswordHasher<object> _passwordHasher;
+		public Helper(ApplicationDBFactory dbContext, PasswordHasher<object> passwordHasher)
 		{
 			_DbContext = dbContext;
+			_passwordHasher = passwordHasher;
 		}
 		public IQueryable<T> Search<T>(IQueryable<T> query, object rb)
 		{
@@ -32,6 +39,17 @@ namespace ReactApp1.Server.Helper
 				}
 			}
 			return query;
+		}
+		public void PasswordHash(UsersEntity user, UserRB rb)
+		{
+			string password = rb.Password;
+			user.PasswordHash = _passwordHasher.HashPassword(user, password);
+		}
+		public bool VerifyPasswrod(UsersEntity user, UserRB rb)
+		{
+			string password = rb.Password;
+			PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+			return result == PasswordVerificationResult.Success;
 		}
 	}
 }

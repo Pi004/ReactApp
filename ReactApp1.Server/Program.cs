@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UsersServices>();
 builder.Services.AddScoped<IUsers, UsersDAO>();
 builder.Services.AddScoped<IHelper, Helper>();
-builder.Services.AddScoped<ApplicationDBFactory>();
+builder.Services.AddDbContext<ApplicationDBFactory>();
 
 var app = builder.Build();
 

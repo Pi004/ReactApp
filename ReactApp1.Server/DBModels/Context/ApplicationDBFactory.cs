@@ -57,8 +57,6 @@ namespace ReactApp1.Server.DBModels.Context
 				.HasOne(p => p.File)
 				.WithOne(p => p.Trash)
 				.HasForeignKey<TrashEntity>(p => p.FileId);
-
-			base.OnModelCreating(modelBuilder);
 		}
 	}
 }
