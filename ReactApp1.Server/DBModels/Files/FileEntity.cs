@@ -3,7 +3,6 @@ using ReactApp1.Server.DBModels.Trash;
 using ReactApp1.Server.DBModels.Users;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Numerics;
 
 namespace ReactApp1.Server.DBModels.Files
 {
@@ -19,7 +18,7 @@ namespace ReactApp1.Server.DBModels.Files
 		public int? folderId { get; set; }
 		public FolderEntity? Folder { get; set; }
 		public string fileType { get; set; }
-		public BigInteger filesize { get; set; }
+		public int filesize { get; set; }
 		public string filePath { get; set; }
 		public byte[] fileData { get; set; }
 		public DateTime CreatedAt { get; set; }

@@ -19,6 +19,10 @@ namespace ReactApp1.Server.DBModels.Context
 		public DbSet<TrashEntity> trash { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<UsersEntity>()
+				.HasIndex(u => u.UserName)
+				.IsUnique();
+
 			modelBuilder.Entity<FolderEntity>()
 				.HasOne(p => p.Users)
 				.WithMany(p => p.Folders)
@@ -53,8 +57,6 @@ namespace ReactApp1.Server.DBModels.Context
 				.HasOne(p => p.File)
 				.WithOne(p => p.Trash)
 				.HasForeignKey<TrashEntity>(p => p.FileId);
-
-			base.OnModelCreating(modelBuilder);
 		}
 	}
 }
