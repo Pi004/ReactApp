@@ -1,5 +1,4 @@
 ﻿using ReactApp1.Server.DBModels.Context;
-using ReactApp1.Server.DBModels.Trash;
 using ReactApp1.Server.Helper;
 using ReactApp1.Server.RBModels.Users;
 
@@ -8,7 +7,7 @@ namespace ReactApp1.Server.DBModels.Users
 	public interface IUsers
 	{
 		public UsersEntity CreateUser(UserRB rb);
-		public TrashEntity? DeleteUser(DelUserRB rb);
+		public UsersEntity? DeleteUser(DelUserRB rb);
 		public List<UsersEntity>? ReadUsers(SearchUsersRB srb);
 	}
 	public class UsersDAO : IUsers
@@ -27,7 +26,6 @@ namespace ReactApp1.Server.DBModels.Users
 		{
 			try
 			{
-
 				UsersEntity entity = new UsersEntity
 				{
 					Email = rb.Email,
@@ -44,29 +42,15 @@ namespace ReactApp1.Server.DBModels.Users
 				return null;
 			}
 		}
-		public TrashEntity? DeleteUser(DelUserRB rb)
+		public UsersEntity? DeleteUser(DelUserRB rb)
 		{
 			try
 			{
 				IQueryable<UsersEntity> query = _dbcontext.users.AsQueryable();
 				UsersEntity entity = _helper.Search(query, rb).ToList()[0];
-				if (entity != null)
-				{
-					entity.IsDeleted = true;
-					TrashEntity trash = new TrashEntity
-					{
-						UserId = entity.Id,
-					};
-					_dbcontext.users.Update(entity);
-					_dbcontext.trash.Add(trash);
-					_dbcontext.SaveChanges();
-					return trash;
-				}
-				else
-				{
-					Console.WriteLine("Error at UsersDAO");
-					return null;
-				}
+				_dbcontext.users.Remove(entity);
+				_dbcontext.SaveChanges();
+				return entity;
 			}
 			catch (Exception ex)
 			{

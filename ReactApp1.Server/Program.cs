@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using ReactApp1.Server.DBModels.Context;
 using ReactApp1.Server.DBModels.Users;
 using ReactApp1.Server.Helper;
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IUserService, UsersServices>();
 builder.Services.AddScoped<IUsers, UsersDAO>();
 builder.Services.AddScoped<IHelper, Helper>();
 builder.Services.AddDbContext<ApplicationDBFactory>();
+builder.Services.AddScoped<PasswordHasher<UsersEntity>>();
 
 var app = builder.Build();
 

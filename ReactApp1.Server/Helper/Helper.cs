@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ReactApp1.Server.DBModels.Context;
 using ReactApp1.Server.DBModels.Users;
 using ReactApp1.Server.RBModels.Users;
 using System.Linq.Dynamic.Core;
@@ -15,11 +14,11 @@ namespace ReactApp1.Server.Helper
 	}
 	public class Helper : IHelper
 	{
-		private readonly new ApplicationDBFactory _DbContext;
-		private readonly new PasswordHasher<object> _passwordHasher;
-		public Helper(ApplicationDBFactory dbContext, PasswordHasher<object> passwordHasher)
+		//private readonly ApplicationDBFactory _DbContext;
+		private readonly PasswordHasher<UsersEntity> _passwordHasher;
+		public Helper(/*ApplicationDBFactory dbContext,*/ PasswordHasher<UsersEntity> passwordHasher)
 		{
-			_DbContext = dbContext;
+			//_DbContext = dbContext;
 			_passwordHasher = passwordHasher;
 		}
 		public IQueryable<T> Search<T>(IQueryable<T> query, object rb)
