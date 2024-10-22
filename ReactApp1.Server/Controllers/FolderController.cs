@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReactApp1.Server.DTO;
+using ReactApp1.Server.RBModels.Folder;
+using ReactApp1.Server.Services.Folder;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,63 @@ namespace ReactApp1.Server.Controllers
 	[ApiController]
 	public class FolderController : ControllerBase
 	{
-		// GET: api/<FolderController>
+		public readonly IFolderService _folderService;
+		public ResponseDTO response = new ResponseDTO { };
+		public FolderController(IFolderService folderService)
+		{
+			_folderService = folderService;
+		}
 		[HttpGet]
-		public IEnumerable<string> Get()
+		public IActionResult GetAll()
 		{
-			return new string[] { "value1", "value2" };
+			try
+			{
+				return Ok(_folderService.GetAllFolder());
+			}
+			catch (Exception ex)
+			{
+				response.data = ex.ToString();
+				return BadRequest(response);
+			}
 		}
-
-		// GET api/<FolderController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
+		[HttpGet("folderName")]
+		public IActionResult GetFolder([FromBody] FolderSRB folder)
 		{
-			return "value";
+			try
+			{
+				return Ok(_folderService.GetFolder(folder));
+			}
+			catch (Exception ex)
+			{
+				response.data = ex.ToString();
+				return BadRequest(response);
+			}
 		}
-
-		// POST api/<FolderController>
 		[HttpPost]
-		public void Post([FromBody] string value)
+		public IActionResult AddFolder([FromBody] FolderRB folder)
 		{
+			try
+			{
+				return Ok(_folderService.CreateFolder(folder));
+			}
+			catch (Exception ex)
+			{
+				response.data = ex.ToString();
+				return BadRequest(response);
+			}
 		}
-
-		// PUT api/<FolderController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		[HttpDelete]
+		public IActionResult Delete([FromBody] FolderSRB folder)
 		{
-		}
-
-		// DELETE api/<FolderController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
+			try
+			{
+				return Ok(_folderService.DeleteFolder(folder));
+			}
+			catch (Exception ex)
+			{
+				response.data = ex.ToString();
+				return BadRequest(response);
+			}
 		}
 	}
 }

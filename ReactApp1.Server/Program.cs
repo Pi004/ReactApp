@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using ReactApp1.Server.DBModels.Context;
+using ReactApp1.Server.DBModels.Folders;
 using ReactApp1.Server.DBModels.Users;
 using ReactApp1.Server.Helper;
+using ReactApp1.Server.Services.Folder;
 using ReactApp1.Server.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UsersServices>();
 builder.Services.AddScoped<IUsers, UsersDAO>();
 builder.Services.AddScoped<IHelper, Helper>();
+builder.Services.AddScoped<IFolderService, FolderService>();
+builder.Services.AddScoped<IFolder, FolderDAO>();
 builder.Services.AddDbContext<ApplicationDBFactory>();
 builder.Services.AddScoped<PasswordHasher<UsersEntity>>();
 

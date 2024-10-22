@@ -9,6 +9,7 @@ namespace ReactApp1.Server.DBModels.Folders
 		public FolderEntity CreateFolder(FolderRB folderRB);
 		public FolderEntity GetFolder(FolderSRB srb);
 		public FolderEntity delFolder(FolderSRB rb);
+		public List<FolderEntity> GetAllFolders();
 	}
 	public class FolderDAO : IFolder
 	{
@@ -63,6 +64,20 @@ namespace ReactApp1.Server.DBModels.Folders
 				_dbcontext.folders.Remove(entity);
 				_dbcontext.SaveChanges();
 				return entity;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				return null;
+			}
+		}
+		public List<FolderEntity> GetAllFolders()
+		{
+			try
+			{
+				FolderSRB srb = new FolderSRB();
+				IQueryable<FolderEntity> query = _dbcontext.folders.AsQueryable();
+				return _helper.Search(query, srb).ToList();
 			}
 			catch (Exception ex)
 			{

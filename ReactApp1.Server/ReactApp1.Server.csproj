@@ -40,7 +40,6 @@
     <Folder Include="DBModels\Audit\" />
     <Folder Include="DBModels\Permissions\" />
     <Folder Include="RBModels\Files\" />
-    <Folder Include="RBModels\Folder\" />
     <Folder Include="RBModels\Trash\" />
     <Folder Include="Services\Trash\" />
   </ItemGroup>
